@@ -1,0 +1,85 @@
+baseURL = "https://machscout.github.io/"
+
+# Change the default theme to be use when building the site with Hugo
+theme = "LoveIt"
+
+# website title
+title = "Dmytro Hladkyi"
+
+# locale ["en", "zh-CN", "fr", "pl", ...]
+locale = "en"
+# language name ["English", "简体中文", "Français", "Polski", ...]
+languageName = "English"
+
+dateFormat = "2006-01-02"
+
+# Menu config
+[menu]
+  [[menu.main]]
+    weight = 1
+    identifier = "posts"
+    # you can add extra information before the name (HTML format is supported), such as icons
+    pre = ""
+    # you can add extra information after the name (HTML format is supported), such as icons
+    post = ""
+    name = "Posts"
+    url = "/posts/"
+    # title will be shown when you hover on this menu link
+    title = ""
+  [[menu.main]]
+    weight = 2
+    identifier = "tags"
+    pre = ""
+    post = ""
+    name = "Tags"
+    url = "/tags/"
+    title = ""
+  [[menu.main]]
+    weight = 3
+    identifier = "categories"
+    pre = ""
+    post = ""
+    name = "Categories"
+    url = "/categories/"
+    title = ""
+
+[params]
+  title = "Dmytro Hladkyi"
+  description = "Notes on Apple platforms, macOS internals, smart homes, electronics, and engineering practice by Dmytro Hladkyi."
+
+  [params.author]
+    name = "Dmytro Hladkyi"
+    link = "https://github.com/MachScout"
+
+  [params.header]
+    [params.header.title]
+      name = "Dmytro Hladkyi"
+      typeit = false
+
+  [params.app]
+    title = "Dmytro Hladkyi"
+
+  [params.home]
+    [params.home.profile]
+      enable = true
+      title = "Dmytro Hladkyi"
+      subtitle = "macOS engineer writing about Apple platforms, smart homes, electronics, etc."
+      typeit = false
+      social = true
+      disclaimer = "macOS internals, security research, home automation, microcontrollers, and practical notes from building things."
+
+    [params.home.posts]
+      enable = true
+      paginate = 6
+
+  [params.social]
+    GitHub = "MachScout"
+    X = "MachScout"
+    Linkedin = "dmytro-hladkyi-a605791a4"
+
+# Markup related configuration in Hugo
+[markup]
+  # Syntax Highlighting (https://gohugo.io/content-management/syntax-highlighting)
+  [markup.highlight]
+    # false is a necessary configuration (https://github.com/dillonzq/LoveIt/issues/158)
+    noClasses = false
