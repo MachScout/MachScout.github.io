@@ -42,6 +42,14 @@ dateFormat = "2006-01-02"
     name = "Categories"
     url = "/categories/"
     title = ""
+  [[menu.main]]
+    weight = 4
+    identifier = "about"
+    pre = ""
+    post = ""
+    name = "About"
+    url = "/about/"
+    title = ""
 
 [params]
   title = "Dmytro Hladkyi"
@@ -63,10 +71,9 @@ dateFormat = "2006-01-02"
     [params.home.profile]
       enable = true
       title = "Dmytro Hladkyi"
-      subtitle = "macOS engineer writing about Apple platforms, smart homes, electronics, etc."
+      subtitle = "macOS engineer writing about Apple platforms, smart homes, electronics, and practical notes from building things."
       typeit = false
       social = true
-      disclaimer = "macOS internals, security research, home automation, microcontrollers, and practical notes from building things."
 
     [params.home.posts]
       enable = true
