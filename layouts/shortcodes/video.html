@@ -1,0 +1,14 @@
+{{- $src := .Get "src" -}}
+{{- $resource := .Page.Resources.GetMatch $src -}}
+{{- if not $resource -}}
+  {{- errorf "video shortcode: page resource %q not found in %s" $src .Page.File.Path -}}
+{{- end -}}
+<figure>
+  <video controls preload="metadata" playsinline style="width: 100%; height: auto;">
+    <source src="{{ $resource.RelPermalink }}" type="video/mp4">
+    Your browser does not support embedded MP4 video.
+  </video>
+  {{- with .Get "caption" }}
+    <figcaption>{{ . }}</figcaption>
+  {{- end }}
+</figure>
