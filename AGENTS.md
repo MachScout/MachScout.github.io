@@ -43,4 +43,4 @@ git add themes/LoveIt
 
 ## Deployment
 
-Pushing to `main` triggers `.github/workflows/hugo.yml`, which builds with Hugo Extended `0.161.1` and deploys `public/` to GitHub Pages. To enable: in the GitHub repo go to **Settings → Pages → Build and deployment** and set Source to **GitHub Actions**.
+Pushing to `main` triggers `.github/workflows/hugo.yml`, which builds with Hugo Extended `0.165.0` and deploys `public/` to GitHub Pages. To enable: in the GitHub repo go to **Settings → Pages → Build and deployment** and set Source to **GitHub Actions**.
