@@ -3,8 +3,8 @@
 {{- if not $resource -}}
   {{- errorf "video shortcode: page resource %q not found in %s" $src .Page.File.Path -}}
 {{- end -}}
-<figure>
-  <video controls preload="metadata" playsinline style="width: 100%; height: auto;">
+<figure class="video-card">
+  <video controls preload="metadata" playsinline width="16" height="9" poster="{{ "images/video-capybara.webp" | relURL }}">
     <source src="{{ $resource.RelPermalink }}" type="video/mp4">
     Your browser does not support embedded MP4 video.
   </video>
