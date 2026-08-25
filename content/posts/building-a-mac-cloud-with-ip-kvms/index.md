@@ -1,7 +1,7 @@
 +++
-title = "Building a Small Mac Cloud with IP KVMs"
+title = "Building a Small Mac Cloud with IP KVMs (draft)"
 date = 2026-08-23T12:00:00+02:00
-draft = true
+draft = false
 tags = ["macos", "ip-kvm", "testing", "homelab"]
 categories = ["macos", "homelab"]
 description = "A practical macOS test lab built from physical Macs, IP KVM devices, managed power, and an isolated network."
@@ -148,22 +148,6 @@ I don't know about you, but VNC is also a problem for me. No matter how many tim
 
 It is acceptable for some tests, but overall my experience with it hasn't been very good. Still, VNC has several useful features that the approach I describe in this article doesn't have.
 
-
-### Comparison
-Here is the practical comparison I use:
-
-| Requirement | macOS VM | Physical Mac with software remote access | Physical Mac with IP KVM and power control |
-| --- | --- | --- | --- |
-| Fast reset and snapshots | Best | Manual | Manual |
-| Login-window testing | Good | Limited | Good |
-| Recovery and startup options | Limited | No | Yes |
-| Physical Wi-Fi and Ethernet transitions | No | Yes, while the OS works | Yes |
-| Real SSD and model-specific behavior | No | Yes | Yes |
-| Access when macOS is frozen | Host-dependent | No | Usually yes |
-| Hard power cycle | Host-dependent | External control required | Yes, with power integration |
-| Easy remote use while travelling | Yes | Yes | Yes |
-
-In practice, a useful lab combines VMs and physical machines.
 
 ## Using IP KVMs
 
