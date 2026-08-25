@@ -61,6 +61,7 @@ dateFormat = "2006-01-02"
 
   [params.header]
     [params.header.title]
+      logo = "images/header-logo.png"
       name = "Dmytro Hladkyi"
       typeit = false
 
