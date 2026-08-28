@@ -1,0 +1,3 @@
+{{- $destination := partial "article/destination.html" . -}}
+{{- $hasEntries := gt (len (findRE "<li[ >]" .TableOfContents)) 0 -}}
+{{- return (and (eq .Section "posts") (not $destination.isExternal) $hasEntries) -}}

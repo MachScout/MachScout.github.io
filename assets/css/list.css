@@ -1,0 +1,56 @@
+.article-list { max-width: var(--content-width); }
+.home-intro { padding: 0.5rem 0 3.75rem; text-align: center; }
+.home-intro > :first-child { margin-top: 0; }
+.home-intro h1 { margin-bottom: 1rem; font-size: clamp(1.5rem, 3vw, 2rem); }
+.home-intro > p { max-width: 64rem; margin: 0 auto; color: var(--color-muted); font-size: 1.125rem; }
+.home-intro__socials { display: flex; justify-content: center; gap: 0.7rem; margin: 1.5rem 0 0; padding: 0; list-style: none; }
+.home-intro__socials a { display: flex; color: var(--color-muted); text-decoration: none; }
+.home-intro__socials a:hover { color: var(--color-accent); }
+.home-intro__socials .icon { width: 1.65rem; height: 1.65rem; fill: currentColor; stroke: none; }
+.home-posts { max-width: var(--shell-width); }
+.article-list__header { margin-bottom: 2rem; }
+.article-list__header > :first-child { margin-top: 0; }
+.article-list__header > p { color: var(--color-muted); font-size: 1.125rem; }
+.article-list__items, .home-posts__items { display: grid; gap: 3.5rem; }
+.article-card { position: relative; display: block; padding: 0 0 3rem; border-bottom: 1px solid var(--color-border); }
+.article-card--text-only { display: block; }
+.article-card__primary-link { position: absolute; inset: 0; z-index: 1; border-radius: 0.4rem; }
+.article-card__primary-link:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 0.3rem; }
+.article-card__image-link { position: relative; z-index: 2; display: block; overflow: hidden; margin-bottom: 1rem; border-radius: 0.2rem; }
+.article-featured { width: 100%; height: auto; background: var(--color-surface); object-fit: cover; }
+.article-featured--card { aspect-ratio: 3 / 1; }
+.article-card__title { margin: 0; font-size: clamp(1.25rem, 2vw, 1.55rem); }
+.article-card__title a { position: relative; z-index: 2; color: var(--color-text); }
+.article-card__summary { margin: 0.8rem 0 0; color: var(--color-muted); }
+.article-card__byline { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.45rem; margin-top: 0.45rem; color: var(--color-muted); font-size: 0.9rem; }
+.article-card__author, .article-card__categories, .article-card__categories li { display: inline-flex; align-items: center; gap: 0.25rem; }
+.article-card__author a, .article-card__categories a { position: relative; z-index: 2; color: var(--color-muted); text-decoration: none; }
+.article-card__author a:hover, .article-card__categories a:hover { color: var(--color-accent); }
+.article-card__categories { gap: 0.45rem; margin: 0; padding: 0; list-style: none; }
+.article-card__meta { display: flex; flex-wrap: wrap; gap: 0.5rem 0.75rem; color: var(--color-muted); font-size: 0.9rem; }
+.article-card__meta-item { display: inline-flex; align-items: center; gap: 0.35rem; }
+.article-card__external-destination, .article-card__external-mark { color: var(--color-accent); }
+.article-card__taxonomy-group { position: relative; z-index: 2; display: flex; align-items: flex-start; gap: 0.4rem; margin-top: 0.65rem; color: var(--color-muted); }
+.article-card__taxonomy-group > .icon { margin-top: 0.28rem; }
+.article-card__taxonomies { position: relative; z-index: 2; display: flex; flex-wrap: wrap; gap: 0.2rem; padding: 0; margin: 0; list-style: none; }
+.article-card__taxonomies li + li::before { content: ", "; color: var(--color-muted); }
+.article-card__taxonomies a { color: var(--color-muted); font-size: 0.85rem; text-decoration: none; }
+.article-card__taxonomies a:hover { color: var(--color-accent); }
+.article-card__footer { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-top: 1rem; }
+.article-card__read-more { position: relative; z-index: 2; font-weight: 600; text-decoration: none; }
+.article-card__tags { justify-content: flex-end; margin-top: 0; text-align: right; }
+.pagination { display: flex; justify-content: space-between; gap: 1rem; margin-top: 2rem; }
+.pagination__next { margin-left: auto; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .article-featured { transition: transform 160ms ease; }
+  .article-card__image-link:hover .article-featured { transform: scale(1.02); }
+}
+
+@media (max-width: 44rem) {
+  .home-intro { padding-bottom: 2.75rem; }
+  .article-list__items, .home-posts__items { gap: 2.5rem; }
+  .article-featured--card { aspect-ratio: 16 / 9; }
+  .article-card__footer { flex-direction: column; }
+  .article-card__tags { justify-content: flex-start; text-align: left; }
+}

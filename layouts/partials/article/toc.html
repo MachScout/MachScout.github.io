@@ -1,0 +1,12 @@
+{{- $toc := .TableOfContents -}}
+{{- if (partial "article/has-toc.html" .) -}}
+  <details class="table-of-contents" aria-labelledby="table-of-contents-title" data-toc open>
+    <summary class="table-of-contents__summary">
+      <span id="table-of-contents-title">Contents</span>
+      <span class="table-of-contents__toggle" aria-hidden="true">⌄</span>
+    </summary>
+    <div class="table-of-contents__content">
+      {{ $toc }}
+    </div>
+  </details>
+{{- end -}}

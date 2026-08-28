@@ -1,0 +1,20 @@
+{{ define "main" }}
+  <section class="taxonomy-overview">
+    <header class="taxonomy-overview__header">
+      <h1>{{ .Title }}</h1>
+      <p>Browse posts by {{ lower .Title }}.</p>
+    </header>
+    {{- with .Data.Terms.Alphabetical -}}
+      <ul class="taxonomy-overview__terms">
+        {{- range . -}}
+          <li>
+            <a href="{{ .Page.RelPermalink }}">{{ .Page.LinkTitle }}</a>
+            <span>{{ .Count }} {{ if eq .Count 1 }}post{{ else }}posts{{ end }}</span>
+          </li>
+        {{- end -}}
+      </ul>
+    {{- else -}}
+      <p class="taxonomy-empty">There are no {{ lower .Title }} yet. <a href="{{ "/posts/" | relURL }}">Browse all posts</a>.</p>
+    {{- end -}}
+  </section>
+{{ end }}

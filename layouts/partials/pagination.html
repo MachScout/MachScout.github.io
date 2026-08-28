@@ -1,0 +1,6 @@
+{{- if or .HasPrev .HasNext -}}
+  <nav class="pagination" aria-label="Pagination">
+    {{- if .HasPrev -}}<a class="pagination__previous" href="{{ .Prev.URL }}">Previous</a>{{- end -}}
+    {{- if .HasNext -}}<a class="pagination__next" href="{{ .Next.URL }}">Next</a>{{- end -}}
+  </nav>
+{{- end -}}

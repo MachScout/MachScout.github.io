@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="{{ .Site.Language.Lang | default "en" }}" data-theme="light">
+<head>
+  {{ partial "head.html" . }}
+  {{ block "title" . }}{{ end }}
+</head>
+<body>
+  {{ partial "header.html" . }}
+  {{- $hasArticleToc := and .IsPage (partial "article/has-toc.html" .) -}}
+  <main id="main-content"{{ if .IsHome }} class="main-content--home"{{ else if $hasArticleToc }} class="main-content--article"{{ end }} tabindex="-1">
+    {{ block "main" . }}{{ end }}
+  </main>
+  {{ partial "footer.html" . }}
+  {{ block "scripts" . }}{{ partial "scripts.html" . }}{{ end }}
+</body>
+</html>

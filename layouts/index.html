@@ -1,0 +1,21 @@
+{{ define "main" }}
+  <section class="home-intro">
+    <h1>{{ .Site.Params.home.profile.title | default .Site.Title }}</h1>
+    {{ with .Site.Params.home.profile.subtitle }}<p>{{ . }}</p>{{ end }}
+    {{- if .Site.Params.home.profile.social -}}
+      {{ partial "social-links.html" . }}
+    {{- end }}
+    {{ .Content }}
+  </section>
+  {{- $posts := where .Site.RegularPages "Section" "posts" -}}
+  {{- $pageSize := .Site.Params.home.posts.paginate | default 6 -}}
+  {{- $paginator := .Paginate $posts $pageSize -}}
+  <section class="home-posts" aria-label="Posts">
+    <div class="home-posts__items">
+      {{- range $paginator.Pages -}}
+        {{ partial "article/card.html" . }}
+      {{- end -}}
+    </div>
+    {{ partial "pagination.html" $paginator }}
+  </section>
+{{ end }}

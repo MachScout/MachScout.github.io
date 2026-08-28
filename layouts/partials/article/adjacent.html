@@ -1,0 +1,27 @@
+{{- $page := . -}}
+{{- $sectionPages := where .Site.RegularPages "Section" $page.Section -}}
+{{- $localPages := slice -}}
+{{- range $sectionPages -}}
+  {{- $destination := partial "article/destination.html" . -}}
+  {{- if not $destination.isExternal -}}
+    {{- $localPages = $localPages | append . -}}
+  {{- end -}}
+{{- end -}}
+{{- $previous := false -}}
+{{- $next := false -}}
+{{- range $index, $candidate := $localPages -}}
+  {{- if eq $candidate.RelPermalink $page.RelPermalink -}}
+    {{- if gt $index 0 -}}
+      {{- $previous = index $localPages (sub $index 1) -}}
+    {{- end -}}
+    {{- if lt (add $index 1) (len $localPages) -}}
+      {{- $next = index $localPages (add $index 1) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if or $previous $next -}}
+  <nav class="article-adjacent" aria-label="More articles">
+    {{- with $previous -}}<a class="article-adjacent__previous" href="{{ .RelPermalink }}">← {{ .Title }}</a>{{- end -}}
+    {{- with $next -}}<a class="article-adjacent__next" href="{{ .RelPermalink }}">{{ .Title }} →</a>{{- end -}}
+  </nav>
+{{- end -}}

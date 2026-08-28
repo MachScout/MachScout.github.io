@@ -1,0 +1,10 @@
+.taxonomy-overview, .taxonomy-list { max-width: var(--content-width); }
+.taxonomy-overview__header { margin-bottom: 1.5rem; }
+.taxonomy-overview__header > :last-child { color: var(--color-muted); }
+.taxonomy-overview__terms { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 0.75rem; padding: 0; margin: 0; list-style: none; }
+.taxonomy-overview__terms li { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding: 0.85rem 1rem; border: 1px solid var(--color-border); border-radius: 0.4rem; background: var(--color-surface); }
+.taxonomy-overview__terms span, .taxonomy-list__kind, .taxonomy-empty { color: var(--color-muted); }
+.taxonomy-list__kind { margin: 0 0 0.35rem; font-size: 0.875rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+.taxonomy-empty { padding: 1.25rem; border: 1px dashed var(--color-border); border-radius: 0.4rem; }
+.not-found { max-width: var(--content-width); padding: 3rem 0; }
+.not-found__action { display: inline-block; margin-top: 0.75rem; padding: 0.55rem 0.85rem; border-radius: 0.35rem; background: var(--color-accent); color: var(--color-canvas); font-weight: 600; text-decoration: none; }

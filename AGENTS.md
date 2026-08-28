@@ -1,46 +1,36 @@
 ## Overview
 
-Hugo static site using the [LoveIt](https://github.com/dillonzq/LoveIt) theme (pinned as a git submodule at `themes/LoveIt`). Content is written in Markdown; the site deploys to GitHub Pages via a GitHub Actions workflow on push to `main`.
+Self-contained Hugo static site with custom layouts, assets, and shortcodes. Content is Markdown, and GitHub Actions deploys it to GitHub Pages on pushes to `main` or `master`. There is no theme dependency or Git submodule.
 
 ## Commands
 
 ```bash
-# Start local dev server (includes drafts, full rebuild on change)
+# Start local development with drafts and full rebuilds
 hugo server --buildDrafts --disableFastRender
+
+# Run the complete shell test suite
+for test_file in tests/*-test.sh; do sh "$test_file"; done
 
 # Production build (outputs to public/)
 hugo --gc --minify
 
 # Create a new post
-hugo new posts/my-post-title.md
+hugo new posts/my-post-title/index.md
 ```
 
 ## Architecture
 
-- **`hugo.toml`** — site config: base URL, title, locale, nav menu, and markup settings. `noClasses = false` is required for syntax highlighting with LoveIt.
-- **`content/posts/`** — blog posts in Markdown with TOML front matter (`+++`). New posts default to `draft = true`.
-- **`layouts/`** — theme overrides. Anything here shadows the equivalent file in `themes/LoveIt/layouts/`. Current overrides: custom shortcodes (`instagram`), diagram renderers (`goat`, `mermaid`), and X/Twitter embed partials.
-- **`archetypes/default.md`** — template applied when `hugo new` creates a file.
-- **`themes/LoveIt`** — git submodule; do not edit directly.
+- **`hugo.toml`** — site configuration, including menus, font stacks in `params.fonts`, and markup settings.
+- **`content/posts/`** — Markdown page bundles with TOML front matter. New posts are drafts; use `externalURL` only for absolute HTTP(S) source articles.
+- **`layouts/`** — complete site templates, partials, heading/table render hooks, and `image`, `video`, and `youtube` shortcodes.
+- **`assets/`** — custom CSS and JavaScript. `assets/css/tokens.css` defines the light/dark color tokens.
+- **`archetypes/default.md`** — defaults for authoring a new post: description, tags, categories, and a table of contents.
+- **`tests/`** — shell tests for rendering contracts and the standalone production build.
 
-## Submodule setup
+## Content conventions
 
-Clone with submodules or initialize after cloning:
-
-```bash
-git clone --recurse-submodules <repo-url>
-# or after cloning:
-git submodule update --init --recursive
-```
-
-To update the theme to a new release:
-
-```bash
-git -C themes/LoveIt fetch --tags origin
-git -C themes/LoveIt checkout <latest-tag>
-git add themes/LoveIt
-```
+Article-specific assets belong in the same page bundle as `index.md`. `featured-image.*` is automatically used in cards and as the hero; set `hideFeaturedImage = true` to omit only the hero. Shortcode image alt text is required unless the image is decorative, and YouTube embeds require a title.
 
 ## Deployment
 
-Pushing to `main` triggers `.github/workflows/hugo.yml`, which builds with Hugo Extended `0.165.0` and deploys `public/` to GitHub Pages. To enable: in the GitHub repo go to **Settings → Pages → Build and deployment** and set Source to **GitHub Actions**.
+`.github/workflows/hugo.yml` builds with Hugo Extended `0.165.0` and deploys `public/` to GitHub Pages. Keep the GitHub Pages actions and Hugo version intact; no submodule configuration belongs in this repository.

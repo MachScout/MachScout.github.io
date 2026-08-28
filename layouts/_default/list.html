@@ -1,0 +1,20 @@
+{{ define "main" }}
+  <section class="article-list">
+    <header class="article-list__header">
+      <h1>{{ .Title }}</h1>
+      {{ with .Params.description }}<p>{{ . }}</p>{{ end }}
+      {{ .Content }}
+    </header>
+    {{- $paginator := .Paginate .RegularPages -}}
+    {{- if $paginator.Pages -}}
+      <div class="article-list__items">
+        {{- range $paginator.Pages -}}
+          {{ partial "article/card.html" . }}
+        {{- end -}}
+      </div>
+      {{ partial "pagination.html" $paginator }}
+    {{- else -}}
+      <p class="taxonomy-empty">There are no posts in this section yet. <a href="{{ "/posts/" | relURL }}">Browse all posts</a>.</p>
+    {{- end -}}
+  </section>
+{{ end }}

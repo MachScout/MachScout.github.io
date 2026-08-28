@@ -1,0 +1,11 @@
+{{- $id := strings.TrimSpace (.Get "id") -}}
+{{- if not $id -}}
+  {{- errorf "youtube shortcode: id is required in %s" .Page.File.Path -}}
+{{- end -}}
+{{- $title := strings.TrimSpace (.Get "title") -}}
+{{- if not $title -}}
+  {{- errorf "youtube shortcode: title is required in %s" .Page.File.Path -}}
+{{- end -}}
+<figure class="video-card video-card--youtube">
+  <iframe src="https://www.youtube-nocookie.com/embed/{{ $id }}" title="{{ $title }}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</figure>

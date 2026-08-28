@@ -1,0 +1,50 @@
+{{- $siteTitle := .Site.Title -}}
+{{- $pageTitle := .Title -}}
+{{- $title := $siteTitle -}}
+{{- if and $pageTitle (ne $pageTitle $siteTitle) (not (strings.Contains $pageTitle $siteTitle)) -}}
+  {{- $title = printf "%s | %s" $pageTitle $siteTitle -}}
+{{- end -}}
+{{- $description := .Params.description | default .Params.summary | default .Site.Params.description -}}
+{{- $destination := partial "article/destination.html" . -}}
+{{- $canonical := .Permalink -}}
+{{- if $destination.isExternal -}}{{ $canonical = $destination.url }}{{- end -}}
+{{- $image := "" -}}
+{{- with partial "article/featured-resource.html" . -}}{{ $image = .Permalink }}{{- end -}}
+{{- $styles := slice (resources.Get "css/tokens.css") (resources.Get "css/base.css") (resources.Get "css/shell.css") (resources.Get "css/list.css") (resources.Get "css/article.css") (resources.Get "css/media.css") (resources.Get "css/code.css") (resources.Get "css/taxonomy.css") (resources.Get "css/utilities.css") -}}
+{{- $css := $styles | resources.Concat "css/site.css" | minify | fingerprint -}}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#FAFBFC" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#22262B" media="(prefers-color-scheme: dark)">
+<title>{{ $title }}</title>
+{{ with $description }}<meta name="description" content="{{ . | plainify }}">{{ end }}
+<link rel="canonical" href="{{ $canonical }}">
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:title" content="{{ $title }}">
+{{ with $description }}<meta property="og:description" content="{{ . | plainify }}">{{ end }}
+<meta property="og:url" content="{{ $canonical }}">
+{{ with $image }}<meta property="og:image" content="{{ . }}">{{ end }}
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="{{ $title }}">
+{{ with $description }}<meta name="twitter:description" content="{{ . | plainify }}">{{ end }}
+{{ with $image }}<meta name="twitter:image" content="{{ . }}">{{ end }}
+{{ with .Site.Home.OutputFormats.Get "RSS" }}<link rel="alternate" type="{{ .MediaType.Type }}" href="{{ .Permalink }}" title="{{ $.Site.Title }}">{{ end }}
+{{- if $destination.isExternal }}
+<meta name="robots" content="noindex,follow">
+{{- end }}
+<style>:root { --font-body: {{ .Site.Params.fonts.body | safeCSS }}; --font-heading: {{ .Site.Params.fonts.heading | safeCSS }}; --font-mono: {{ .Site.Params.fonts.mono | safeCSS }}; }</style>
+<script>
+  (function () {
+    var saved = null;
+    document.documentElement.classList.add('js');
+    try {
+      saved = localStorage.getItem('color-theme');
+    } catch (error) {
+      // The system preference remains available when storage is blocked.
+    }
+    var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.dataset.theme = saved === 'light' || saved === 'dark' ? saved : (dark ? 'dark' : 'light');
+  }());
+</script>
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">

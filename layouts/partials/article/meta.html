@@ -1,0 +1,45 @@
+{{- $page := .page -}}
+{{- $destination := .destination -}}
+{{- if .card -}}
+  <div class="article-card__byline">
+    <span class="article-card__author">{{ partial "icon.html" (dict "name" "author") }} <a href="{{ $page.Site.Params.author.link }}">{{ $page.Site.Params.author.name | default $page.Site.Title }}</a></span>
+    <span>published on <time datetime="{{ $page.Date.Format "2006-01-02" }}">{{ $page.Date.Format ($page.Site.Params.dateFormat | default "Jan 2, 2006") }}</time></span>
+    {{- with $page.GetTerms "categories" -}}
+      <span>included in</span>
+      <ul class="article-card__categories" aria-label="Categories">
+        {{- range . -}}<li>{{ partial "icon.html" (dict "name" "folder") }}<a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>{{- end -}}
+      </ul>
+    {{- end -}}
+    {{- if $destination.isExternal -}}
+      <span class="article-card__external-destination"><span aria-hidden="true">{{ $destination.hostname }} ↗</span><span class="visually-hidden">External link to {{ $destination.hostname }}</span></span>
+    {{- end -}}
+  </div>
+{{- else -}}
+  <div class="article-card__meta">
+    {{- if not $page.Date.IsZero -}}
+      <span class="article-card__meta-item">
+        {{ partial "icon.html" (dict "name" "calendar") }}
+        <time datetime="{{ $page.Date.Format "2006-01-02" }}">{{ $page.Date.Format ($page.Site.Params.dateFormat | default "Jan 2, 2006") }}</time>
+      </span>
+    {{- end -}}
+    {{- if .showReadingTime -}}
+      <span class="article-card__meta-item">{{ partial "icon.html" (dict "name" "clock") }} Reading time: {{ $page.ReadingTime }} min</span>
+    {{- end -}}
+  </div>
+  {{- with $page.GetTerms "tags" -}}
+    <div class="article-card__taxonomy-group">
+      {{ partial "icon.html" (dict "name" "tag") }}
+      <ul class="article-card__taxonomies" aria-label="Tags">
+        {{- range . -}}<li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>{{- end -}}
+      </ul>
+    </div>
+  {{- end -}}
+  {{- with $page.GetTerms "categories" -}}
+    <div class="article-card__taxonomy-group">
+      {{ partial "icon.html" (dict "name" "folder") }}
+      <ul class="article-card__taxonomies" aria-label="Categories">
+        {{- range . -}}<li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>{{- end -}}
+      </ul>
+    </div>
+  {{- end -}}
+{{- end -}}

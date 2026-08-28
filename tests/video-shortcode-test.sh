@@ -22,3 +22,7 @@ grep -F '<figure class="video-card">' "$rendered_page" >/dev/null
 grep -F '<video controls preload="metadata" playsinline width="16" height="9" poster="/images/video-capybara.webp">' "$rendered_page" >/dev/null
 grep -F '<source src="/posts/video/test-video.mp4" type="video/mp4">' "$rendered_page" >/dev/null
 grep -F '<figcaption>A short test clip.</figcaption>' "$rendered_page" >/dev/null
+if grep -F 'youtube-nocookie.com' "$rendered_page" >/dev/null; then
+  printf 'unexpected YouTube embed on a page without a youtube shortcode\n' >&2
+  exit 1
+fi

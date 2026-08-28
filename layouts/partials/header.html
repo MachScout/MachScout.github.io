@@ -1,0 +1,29 @@
+{{- $siteName := .Site.Params.header.title.name | default .Site.Title -}}
+{{- $logoPath := .Site.Params.header.title.logo | default "" -}}
+{{- $logo := cond (ne $logoPath "") (resources.Get $logoPath) nil -}}
+<header class="site-header">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div class="site-header__inner">
+    <a class="site-brand" href="{{ "/" | relURL }}" aria-label="{{ $siteName }} home">
+      {{- with $logo -}}
+        <img class="site-brand__logo" src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="">
+      {{- end -}}
+      <span class="site-brand__name">{{ $siteName }}</span>
+    </a>
+    <button class="site-nav-toggle" type="button" data-nav-toggle aria-controls="site-navigation" aria-expanded="false" aria-label="Toggle navigation">
+      {{ partial "icon.html" (dict "name" "menu") }}
+    </button>
+    <nav class="site-nav" id="site-navigation" data-site-nav aria-label="Primary navigation">
+      <ul class="site-nav__list">
+        {{- range .Site.Menus.main -}}
+          <li><a href="{{ .URL }}"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Name }}</a></li>
+        {{- end -}}
+      </ul>
+      <button class="theme-toggle" type="button" data-theme-toggle data-theme-mode="light" aria-label="Switch color theme to dark" aria-describedby="theme-status">
+        <span class="theme-toggle__icon theme-toggle__icon--light" aria-hidden="true">{{ partial "icon.html" (dict "name" "light") }}</span>
+        <span class="theme-toggle__icon theme-toggle__icon--dark" aria-hidden="true">{{ partial "icon.html" (dict "name" "dark") }}</span>
+        <span class="visually-hidden" id="theme-status" role="status" aria-live="polite" aria-atomic="true" data-theme-status>Light color theme</span>
+      </button>
+    </nav>
+  </div>
+</header>

@@ -1,10 +1,42 @@
-{{- $src := .Get "src" -}}
+{{- $src := strings.TrimSpace (.Get "src") -}}
+{{- if not $src -}}
+  {{- errorf "video shortcode: src is required in %s" .Page.File.Path -}}
+{{- end -}}
 {{- $resource := .Page.Resources.GetMatch $src -}}
 {{- if not $resource -}}
   {{- errorf "video shortcode: page resource %q not found in %s" $src .Page.File.Path -}}
 {{- end -}}
-<figure class="video-card">
-  <video controls preload="metadata" playsinline width="16" height="9" poster="{{ "images/video-capybara.webp" | relURL }}">
+{{- $ratio := "16/9" -}}
+{{- $ratioParam := strings.TrimSpace (.Get "ratio") -}}
+{{- if $ratioParam -}}
+  {{- if eq (len (findRE "^[0-9]+([.][0-9]+)?/[0-9]+([.][0-9]+)?$" $ratioParam)) 0 -}}
+    {{- errorf "video shortcode: ratio %q is invalid in %s" $ratioParam .Page.File.Path -}}
+  {{- end -}}
+  {{- $ratio = $ratioParam -}}
+{{- end -}}
+{{- $maxWidth := "48rem" -}}
+{{- $maxWidthParam := strings.TrimSpace (.Get "maxWidth") -}}
+{{- if $maxWidthParam -}}
+  {{- if eq (len (findRE "^[0-9]+([.][0-9]+)?(px|rem|em|vw|%)$" $maxWidthParam)) 0 -}}
+    {{- errorf "video shortcode: maxWidth %q is invalid in %s" $maxWidthParam .Page.File.Path -}}
+  {{- end -}}
+  {{- $maxWidth = $maxWidthParam -}}
+{{- end -}}
+{{- $posterURL := "images/video-capybara.webp" | relURL -}}
+{{- $posterPath := strings.TrimSpace (.Get "poster") -}}
+{{- if $posterPath -}}
+  {{- $poster := .Page.Resources.GetMatch $posterPath -}}
+  {{- if not $poster -}}
+    {{- errorf "video shortcode: poster resource %q not found in %s" $posterPath .Page.File.Path -}}
+  {{- end -}}
+  {{- $posterURL = $poster.RelPermalink -}}
+{{- end -}}
+{{- $style := "" -}}
+{{- if or $ratioParam $maxWidthParam -}}
+  {{- $style = printf "--media-ratio: %s; --media-max-width: %s;" $ratio $maxWidth | safeCSS -}}
+{{- end -}}
+<figure class="video-card"{{ with $style }} style="{{ . }}"{{ end }}>
+  <video controls preload="metadata" playsinline width="16" height="9" poster="{{ $posterURL }}">
     <source src="{{ $resource.RelPermalink }}" type="video/mp4">
     Your browser does not support embedded MP4 video.
   </video>

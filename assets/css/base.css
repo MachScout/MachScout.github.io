@@ -1,0 +1,17 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+html { background: var(--color-canvas); color: var(--color-text); font-family: var(--font-body); line-height: 1.6; }
+body { margin: 0; min-width: 20rem; background: var(--color-canvas); color: var(--color-text); }
+img { display: block; max-width: 100%; }
+a { color: var(--color-accent); text-underline-offset: 0.16em; }
+a:hover { text-decoration-thickness: 0.13em; }
+button { font: inherit; }
+.icon { width: 1em; height: 1em; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; vertical-align: -0.125em; }
+:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); line-height: 1.2; }
+code, pre { font-family: var(--font-mono); }
+pre { overflow-x: auto; padding: 1rem; background: var(--color-code); }
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}

@@ -1,7 +1,8 @@
-{{- $params := .Page.Scratch.Get "params" -}}
-{{- $render := $params.code.render | default dict -}}
-{{- if $render.goat | default true -}}
-    {{- partial "plugin/goat.html" . -}}
-{{- else -}}
-    {{- dict "Content" .Inner "Lang" .Type "Options" .Options "Page" .Page | partial "plugin/code-block.html" -}}
-{{- end -}}
+{{- $caption := .Attributes.caption | default "" -}}
+{{- $class := .Attributes.class | default "diagram" -}}
+<figure class="goat-diagram">
+  {{- with diagrams.Goat (trim .Inner "\n\r") -}}
+    <svg class="{{ $class }}" width="{{ .Width }}" height="{{ .Height }}" xmlns="http://www.w3.org/2000/svg" version="1.1">{{ .Inner }}</svg>
+  {{- end -}}
+  {{- with $caption -}}<figcaption>{{ . }}</figcaption>{{- end -}}
+</figure>

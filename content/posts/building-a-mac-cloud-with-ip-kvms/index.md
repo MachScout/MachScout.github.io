@@ -38,7 +38,7 @@ The main limitations for me were the inability to sign in with an Apple ID, the 
 
 You could get clipboard sharing by connecting to the VM locally over VNC, but the other problems remained. Even with these limitations, VMs still covered most everyday use cases.
 
-#### Host and guest version dependencies
+##### Host and guest version dependencies
 
 The capabilities of macOS VMs built with Apple's Virtualization framework depend on the host and guest OS versions.
 
@@ -60,7 +60,7 @@ With UUIDs, it was the opposite. Before macOS 15, you could substitute a UUID, b
 
 Starting with macOS 15, a new VM receives an identity derived from the host's Secure Enclave. Moving it to another Mac, or running cloned copies at the same time, can create a new identity and require Apple Account authentication again.
 
-#### Provisioning UUID
+##### Provisioning UUID
 Not being able to substitute a provisioning UUID is the main problem with VMs for me, because I mostly test products that require specific entitlements.
 A development provisioning profile requires registered devices, and the Apple Developer Program permits [up to 100 registered Macs per membership year](https://developer.apple.com/help/account/devices/devices-overview/).
 
@@ -72,7 +72,7 @@ Note: you can't sign in with your Apple ID in System Settings, but you can still
 
 Quinn “The Eskimo!” provides [some useful history on this topic](https://developer.apple.com/forums/thread/787500?answerId=843094022#843094022).
 
-#### SSD and disk behavior
+##### SSD and disk behavior
 
 Some storage work cannot be reproduced accurately with a virtual disk. Examples include:
 
@@ -83,7 +83,7 @@ Some storage work cannot be reproduced accurately with a virtual disk. Examples 
 
 VMs are useful for functional file-system tests, but they are not a replacement for the storage hardware when the hardware is part of the problem.
 
-#### The two-VM license limit
+##### The two-VM license limit
 
 It would actually be great to buy a few powerful Macs, run many VMs with different macOS versions on them, and make all those VMs remotely accessible.
 
@@ -93,7 +93,7 @@ Apple's [macOS software license](https://www.apple.com/legal/sla/docs/macOSSequo
 
 There are [technical ways to get around this limit](https://khronokernel.com/macos/2023/08/08/AS-VM.html), but doing so would violate the license and make the setup harder to support.
 
-#### Cases where VMs are better
+##### Cases where VMs are better
 Some tests are still easier in a VM. Authorization plug-ins are a good example: a broken login flow can be reset quickly from a snapshot. A physical machine becomes more valuable when the test also involves Active Directory, a specific network, real peripherals, disk behavior, or recovery.
 
 VMs are also great for automated testing. You can deploy preconfigured machines automatically and run automated tests on them.

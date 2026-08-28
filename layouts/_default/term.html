@@ -1,0 +1,20 @@
+{{ define "main" }}
+  {{- $pages := where .RegularPages "Section" "posts" -}}
+  {{- $paginator := .Paginate $pages -}}
+  <section class="taxonomy-list article-list">
+    <header class="article-list__header">
+      <p class="taxonomy-list__kind">{{ .Data.Plural | title }}</p>
+      <h1>{{ .Title }}</h1>
+    </header>
+    {{- if $paginator.Pages -}}
+      <div class="article-list__items">
+        {{- range $paginator.Pages -}}
+          {{ partial "article/card.html" . }}
+        {{- end -}}
+      </div>
+      {{ partial "pagination.html" $paginator }}
+    {{- else -}}
+      <p class="taxonomy-empty">There are no posts in this {{ singularize (lower .Data.Plural) }} yet. <a href="{{ "/posts/" | relURL }}">Browse all posts</a>.</p>
+    {{- end -}}
+  </section>
+{{ end }}

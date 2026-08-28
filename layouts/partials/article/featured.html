@@ -1,0 +1,28 @@
+{{- $page := .page -}}
+{{- $variant := .variant | default "card" -}}
+{{- $resource := .resource -}}
+{{- $alt := "" -}}
+{{- if eq $variant "hero" -}}
+  {{- $alt = $page.Params.featuredImageAlt | default "" -}}
+{{- end -}}
+{{- if not $resource -}}
+  {{- $resource = partial "article/featured-resource.html" $page -}}
+{{- end -}}
+{{- if $resource -}}
+  {{- $isRaster := and (eq $resource.ResourceType "image") (in (slice "avif" "gif" "jpeg" "jpg" "png" "webp") $resource.MediaType.SubType) -}}
+  {{- $srcset := slice -}}
+  {{- if $isRaster -}}
+    {{- if gt $resource.Width 480 -}}
+      {{- $small := $resource.Resize "480x" -}}
+      {{- $srcset = $srcset | append (printf "%s %dw" $small.RelPermalink $small.Width) -}}
+    {{- end -}}
+    {{- if gt $resource.Width 960 -}}
+      {{- $medium := $resource.Resize "960x" -}}
+      {{- $srcset = $srcset | append (printf "%s %dw" $medium.RelPermalink $medium.Width) -}}
+    {{- end -}}
+    {{- if gt $resource.Width 480 -}}
+      {{- $srcset = $srcset | append (printf "%s %dw" $resource.RelPermalink $resource.Width) -}}
+    {{- end -}}
+  {{- end -}}
+  <img class="article-featured article-featured--{{ $variant }}" src="{{ $resource.RelPermalink }}"{{ with $srcset }} srcset="{{ delimit . ", " }}" sizes="{{ if eq $variant "hero" }}(min-width: 50rem) 48rem, calc(100vw - 2rem){{ else }}(min-width: 74rem) 72rem, calc(100vw - 2rem){{ end }}"{{ end }}{{ if $isRaster }} width="{{ $resource.Width }}" height="{{ $resource.Height }}"{{ end }} alt="{{ $alt }}"{{ if .eager }} loading="eager" fetchpriority="high"{{ else }} loading="lazy" decoding="async"{{ end }}>
+{{- end -}}

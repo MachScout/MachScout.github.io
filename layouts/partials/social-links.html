@@ -1,0 +1,14 @@
+{{- $social := .Site.Params.social -}}
+{{- if or $social.GitHub $social.Linkedin $social.X -}}
+  <ul class="home-intro__socials" aria-label="Social profiles">
+    {{- with $social.GitHub -}}
+      <li><a href="https://github.com/{{ . }}" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">{{ partial "icon.html" (dict "name" "github") }}</a></li>
+    {{- end -}}
+    {{- with $social.Linkedin -}}
+      <li><a href="https://www.linkedin.com/in/{{ . }}/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">{{ partial "icon.html" (dict "name" "linkedin") }}</a></li>
+    {{- end -}}
+    {{- with $social.X -}}
+      <li><a href="https://x.com/{{ . }}" target="_blank" rel="noopener noreferrer" aria-label="X profile">{{ partial "icon.html" (dict "name" "x") }}</a></li>
+    {{- end -}}
+  </ul>
+{{- end -}}

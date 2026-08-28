@@ -1,0 +1,24 @@
+{{- $src := strings.TrimSpace (.Get "src") -}}
+{{- if not $src -}}
+  {{- errorf "image shortcode: src is required in %s" .Page.File.Path -}}
+{{- end -}}
+{{- $decorative := eq (lower (strings.TrimSpace (.Get "decorative"))) "true" -}}
+{{- $alt := strings.TrimSpace (.Get "alt") -}}
+{{- if and (not $decorative) (not $alt) -}}
+  {{- errorf "image shortcode: alt is required unless decorative=true in %s" .Page.File.Path -}}
+{{- end -}}
+{{- $resource := .Page.Resources.GetMatch $src -}}
+{{- if not $resource -}}
+  {{- errorf "image shortcode: page resource %q not found in %s" $src .Page.File.Path -}}
+{{- end -}}
+{{- $extension := lower (path.Ext $resource.Name) -}}
+{{- $isPNG := or (eq $resource.MediaType.SubType "png") (eq $extension ".png") -}}
+{{- $isPhoto := in (slice "jpeg" "jpg" "webp" "avif") $resource.MediaType.SubType -}}
+{{- $isProcessable := and (eq $resource.ResourceType "image") (in (slice "avif" "gif" "jpeg" "jpg" "png" "webp") $resource.MediaType.SubType) -}}
+{{- $class := strings.TrimSpace (.Get "class") -}}
+<figure class="media-figure{{ with $class }} {{ . }}{{ end }}">
+  <img class="media-frame{{ if $isPNG }} media-frame--png{{ end }}{{ if $isPhoto }} media-frame--photo{{ end }}" src="{{ $resource.RelPermalink }}"{{ if $isProcessable }} width="{{ $resource.Width }}" height="{{ $resource.Height }}"{{ end }} alt="{{ if $decorative }}{{ else }}{{ $alt }}{{ end }}">
+  {{- with .Get "caption" }}
+    <figcaption>{{ . }}</figcaption>
+  {{- end }}
+</figure>

@@ -1,0 +1,30 @@
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<rss version="2.0">
+  <channel>
+    <title>{{ .Site.Title | transform.XMLEscape | safeHTML }}</title>
+    <link>{{ .Site.Home.Permalink | transform.XMLEscape | safeHTML }}</link>
+    <description>{{ .Site.Params.description | transform.XMLEscape | safeHTML }}</description>
+    <generator>Hugo</generator>
+    {{- $pages := where .RegularPages "Section" "posts" -}}
+    {{- if or .IsHome (eq .Section "posts") -}}
+      {{- $pages = where .Site.RegularPages "Section" "posts" -}}
+    {{- end -}}
+    {{- range $pages.ByDate.Reverse -}}
+      {{- $destination := partial "article/destination.html" . -}}
+      {{- $url := .Permalink -}}
+      {{- if $destination.isExternal -}}{{ $url = $destination.url }}{{- end -}}
+      {{- $description := .Params.description | default .Params.summary -}}
+      {{- if and (not $description) (not $destination.isExternal) -}}
+        {{- $description = .Summary -}}
+      {{- end -}}
+      {{- $description = $description | default .Site.Params.description -}}
+      <item>
+        <title>{{ .Title | plainify | transform.XMLEscape | safeHTML }}</title>
+        <link>{{ $url | transform.XMLEscape | safeHTML }}</link>
+        <guid isPermaLink="true">{{ $url | transform.XMLEscape | safeHTML }}</guid>
+        <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | transform.XMLEscape | safeHTML }}</pubDate>
+        <description>{{ $description | plainify | transform.XMLEscape | safeHTML }}</description>
+      </item>
+    {{- end -}}
+  </channel>
+</rss>

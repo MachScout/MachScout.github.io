@@ -1,7 +1,4 @@
-{{- $params := .Page.Scratch.Get "params" -}}
-{{- $render := $params.code.render | default dict -}}
-{{- if $render.mermaid | default true -}}
-    {{- dict "Content" .Inner "Page" .Page | partial "plugin/mermaid.html" -}}
-{{- else -}}
-    {{- dict "Content" .Inner "Lang" .Type "Options" .Options "Page" .Page | partial "plugin/code-block.html" -}}
-{{- end -}}
+<figure class="diagram-fallback diagram-fallback--mermaid">
+  <figcaption>Mermaid diagram source</figcaption>
+  <pre><code class="language-mermaid">{{ .Inner | transform.HTMLEscape | safeHTML }}</code></pre>
+</figure>

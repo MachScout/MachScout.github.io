@@ -1,0 +1,11 @@
+{{- $external := .Params.externalURL | default "" -}}
+{{- $destination := dict "url" .RelPermalink "isExternal" false "hostname" "" "target" "" "rel" "" -}}
+{{- if $external -}}
+  {{- $parsed := urls.Parse $external -}}
+  {{- $hasHTTPScheme := or (eq $parsed.Scheme "http") (eq $parsed.Scheme "https") -}}
+  {{- if or (not $hasHTTPScheme) (not $parsed.Hostname) -}}
+    {{- errorf "externalURL must be an absolute http(s) URL: %q in %s" $external .Path -}}
+  {{- end -}}
+  {{- $destination = dict "url" $external "isExternal" true "hostname" $parsed.Hostname "target" "_blank" "rel" "external noopener noreferrer" -}}
+{{- end -}}
+{{- return $destination -}}

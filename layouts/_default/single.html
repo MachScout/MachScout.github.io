@@ -1,0 +1,40 @@
+{{ define "main" }}
+  {{- $destination := partial "article/destination.html" . -}}
+  {{- if $destination.isExternal -}}
+    <article class="article article--external">
+      <header class="article__header">
+        <h1>{{ .Title }}</h1>
+        {{ with .Params.description | default .Summary }}<p class="article__description">{{ . | plainify }}</p>{{ end }}
+      </header>
+      <p class="article__outbound-notice">This article is published on {{ $destination.hostname }}. <a href="{{ $destination.url }}" target="{{ $destination.target }}" rel="{{ $destination.rel }}">Read the original article<span class="visually-hidden"> on {{ $destination.hostname }}</span> ↗</a></p>
+    </article>
+  {{- else -}}
+    {{- $resource := partial "article/featured-resource.html" . -}}
+    {{- $hasToc := partial "article/has-toc.html" . -}}
+    <article class="article{{ if $hasToc }} article--with-toc{{ end }}">
+      <header class="article__header">
+        <h1>{{ .Title }}</h1>
+        {{ with .Params.description }}<p class="article__description">{{ . }}</p>{{ end }}
+        {{ partial "article/meta.html" (dict "page" . "destination" $destination "showReadingTime" true) }}
+      </header>
+      {{- if and $resource (not (.Params.hideFeaturedImage | default false)) -}}
+        <figure class="article-hero">
+          {{ partial "article/featured.html" (dict "page" . "resource" $resource "variant" "hero" "eager" true) }}
+        </figure>
+      {{- end -}}
+      {{- if $hasToc }}
+      <div class="article__layout">
+        {{ partial "article/toc.html" . }}
+        <div class="article__body">
+      {{- end }}
+        <div class="article__content">
+          {{ .Content }}
+        </div>
+        {{ partial "article/adjacent.html" . }}
+      {{- if $hasToc }}
+        </div>
+      </div>
+      {{- end }}
+    </article>
+  {{- end -}}
+{{ end }}

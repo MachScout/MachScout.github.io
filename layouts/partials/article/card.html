@@ -1,0 +1,32 @@
+{{- $page := . -}}
+{{- $destination := partial "article/destination.html" $page -}}
+{{- $resource := partial "article/featured-resource.html" $page -}}
+{{- $classes := slice "article-card" -}}
+{{- if $destination.isExternal }}{{ $classes = $classes | append "article-card--external" }}{{ end -}}
+{{- if not $resource }}{{ $classes = $classes | append "article-card--text-only" }}{{ end -}}
+<article class="{{ delimit $classes " " }}">
+  {{- if $destination.isExternal -}}
+    <a class="article-card__primary-link" href="{{ $destination.url }}" target="{{ $destination.target }}" rel="{{ $destination.rel }}" aria-label="Read {{ $page.Title }} on {{ $destination.hostname }}"><span class="visually-hidden">Read {{ $page.Title }} on {{ $destination.hostname }}</span></a>
+  {{- end -}}
+  {{- with $resource -}}
+    <a class="article-card__image-link" href="{{ $destination.url }}"{{ with $destination.target }} target="{{ . }}"{{ end }}{{ with $destination.rel }} rel="{{ . }}"{{ end }} aria-hidden="true" tabindex="-1">
+      {{ partial "article/featured.html" (dict "page" $page "resource" . "variant" "card" "eager" false) }}
+    </a>
+  {{- end -}}
+  <div class="article-card__body">
+    <h2 class="article-card__title"><a href="{{ $destination.url }}"{{ with $destination.target }} target="{{ . }}"{{ end }}{{ with $destination.rel }} rel="{{ . }}"{{ end }}>{{ $page.Title }}{{ if $destination.isExternal }} <span class="article-card__external-mark">{{ partial "icons/external.html" . }}</span><span class="visually-hidden"> (external link to {{ $destination.hostname }})</span>{{ end }}</a></h2>
+    {{ partial "article/meta.html" (dict "page" $page "destination" $destination "card" true) }}
+    {{ with $page.Params.description | default $page.Summary }}<p class="article-card__summary">{{ . | plainify }}</p>{{ end }}
+    <footer class="article-card__footer">
+      <a class="article-card__read-more" href="{{ $destination.url }}"{{ with $destination.target }} target="{{ . }}"{{ end }}{{ with $destination.rel }} rel="{{ . }}"{{ end }} aria-label="Read More: {{ $page.Title }}">Read More</a>
+      {{- with $page.GetTerms "tags" -}}
+        <div class="article-card__taxonomy-group article-card__tags">
+          {{ partial "icon.html" (dict "name" "tag") }}
+          <ul class="article-card__taxonomies" aria-label="Tags">
+            {{- range . -}}<li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>{{- end -}}
+          </ul>
+        </div>
+      {{- end -}}
+    </footer>
+  </div>
+</article>
