@@ -7,8 +7,9 @@ and network diagrams. The result should feel like a carefully prepared engineeri
 notebook: approachable and tactile, but still precise enough to explain a system.
 
 The source assets live in
-`assets/images/diagram-kit/soft-technical-sketch/`. They are PNG files with
-transparent backgrounds so the article controls the final canvas color.
+`assets/images/diagram-kit/soft-technical-sketch/`. Generate new PNG assets on
+solid pure white backgrounds so background-removal tools receive a clean,
+uniform canvas.
 
 ## Visual language
 
@@ -16,8 +17,9 @@ transparent backgrounds so the article controls the final canvas color.
   handmade, but device geometry and connections must remain easy to read.
 - Use light watercolor or marker washes inside objects. Leave generous unpainted
   space and avoid dense illustration backgrounds.
-- Keep shadows faint, soft, and confined to the object. Never generate a paper
-  rectangle, vignette, glow, or opaque background around an asset.
+- Keep shadows faint, soft, and confined to the object. Use a uniform pure-white
+  canvas with no paper texture, vignette, glow, gradient, scenery, or colored
+  backdrop.
 - Prefer front or subtle three-quarter views. Use the same viewing angle for
   devices that appear together.
 - Simplify small hardware details, but keep ports, antennas, status lights, and
@@ -70,42 +72,6 @@ connections. Ochre should be sparse and must not be confused with AC orange.
 
 Avoid logos other than the explicitly allowed rear-lid Apple mark, model names,
 interface text, decorative cables, and photorealistic product-render lighting.
-
-## Capybara character
-
-The reusable capybara is derived from the site logo and acts as a small guide or
-observer inside technical illustrations. Keep the character visually compatible
-with the device set rather than rendering realistic fur.
-
-- Preserve the warm chestnut-brown body, lighter tan muzzle and belly, compact
-  rounded proportions, tiny dark eyes, broad blunt muzzle, and matte black
-  deerstalker hat.
-- Use broad watercolor or marker fills with only sparse pencil texture. Do not
-  draw individual hair strands or dense fur detail.
-- Keep the pose neutral and the silhouette readable at diagram scale. The hat is
-  the primary identity marker and remains visible in every viewpoint.
-- Do not include the logo's magnifying glass, green apple, insect, badge, or
-  circular frame unless an article specifically needs one of those elements.
-- Capybaras have no prominent visible tail; do not add a large tail in rear or
-  side views.
-
-The base transparent PNG viewpoints are:
-
-- `capybara-front.png`
-- `capybara-side.png` — right-facing profile
-- `capybara-rear.png`
-
-The reusable working scene is `capybara-working-at-macbook.png`: the capybara
-sits behind a plain warm-wood desk in a subtle three-quarter view, with the open
-rear-facing silver MacBook and its centered Apple logo visible. Keep this scene
-free of decorative office props and cables. The chair must remain structurally
-readable: include its backrest, seat edge, and at least two clearly visible legs
-that are thinner than the desk legs.
-
-Use `capybara-working-at-macbook-screen.png` when the display needs to be the
-focus. It shows the same scene from behind the capybara's left shoulder, keeping
-the complete notched screen, keyboard, and trackpad visible. The generic blue
-macOS desktop has a menu bar and Dock but no readable interface text.
 
 ## macOS desktop inserts
 
@@ -170,7 +136,7 @@ from the illustrated hardware.
 
 ```text
 Use case: background-extraction
-Asset type: reusable transparent PNG illustration for a technical blog diagram
+Asset type: reusable PNG illustration for a technical blog diagram
 Primary request: Draw one [SUBJECT] as a clean isolated asset.
 Subject: [VIEWPOINT, REQUIRED PARTS, AND TECHNICALLY IMPORTANT DETAILS].
 Style/medium: Soft Technical Sketch — controlled hand-drawn graphite ink
@@ -180,10 +146,10 @@ Color palette: graphite #252A30, cool off-white and gray, muted cornflower blue
 #3273DC, with sparse pale sage status accents.
 Materials/textures: delicate pencil shading and dry watercolor texture; crisp
 readable silhouette; only a faint contact shadow confined to the object.
-Composition/framing: centered isolated object, generous transparent padding,
-no crop.
-Background: genuinely transparent with a real alpha channel; no white or black
-background, checkerboard, paper rectangle, vignette, or glow.
+Composition/framing: centered isolated object, generous white padding, no crop.
+Background: solid pure white background (#FFFFFF) across the entire canvas; fully
+opaque, with no transparency, checkerboard, paper texture, vignette, glow,
+gradient, scenery, or colored backdrop.
 Constraints: no text, labels, letters, numbers, logos, watermark, decorative
 objects, scenery, or photorealism.
 ```
