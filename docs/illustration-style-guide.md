@@ -13,13 +13,21 @@ uniform canvas.
 
 ## Visual language
 
-- Draw outlines in dark graphite with small variations in pressure. Lines may feel
-  handmade, but device geometry and connections must remain easy to read.
+- Give every object a clear, continuous outer contour in dark graphite `#252A30`
+  or near-black. Make this outer contour slightly stronger than internal details,
+  with no pale, broken, or feathered edges against the white background.
+- Apply the same external keyline to arrows, connection paths, cables,
+  connectors, node shapes, and icons. Keep semantic colors inside the dark
+  contour so every element remains easy to isolate from the background.
+- Lines may vary slightly in pressure and feel handmade, but device geometry and
+  connections must remain easy to read.
 - Use light watercolor or marker washes inside objects. Leave generous unpainted
   space and avoid dense illustration backgrounds.
-- Keep shadows faint, soft, and confined to the object. Use a uniform pure-white
-  canvas with no paper texture, vignette, glow, gradient, scenery, or colored
-  backdrop.
+- Do not draw contact, cast, or drop shadows outside an object's silhouette.
+  Keep the pure-white canvas clean right up to the object edge so the object can
+  be extracted cleanly. Light pencil shading inside the object is allowed.
+- Use a uniform pure-white canvas with no paper texture, vignette, glow,
+  gradient, scenery, or colored backdrop.
 - Prefer front or subtle three-quarter views. Use the same viewing angle for
   devices that appear together.
 - Simplify small hardware details, but keep ports, antennas, status lights, and
@@ -101,7 +109,8 @@ The reusable series contains:
 ## Diagram rules
 
 - Use tidy orthogonal connection paths where possible.
-- Keep arrowheads small, dark, and unambiguous.
+- Keep arrowheads small, dark, unambiguous, and enclosed by the same clear outer
+  contour as their shafts.
 - Use rounded rectangles for actions or components and diamonds for decisions.
 - Leave node interiors empty in reusable assets; add labels during article
   composition.
@@ -123,9 +132,10 @@ The reusable series contains:
 | AC power | `#D97706` | A slightly relaxed or gently curved cable with a recognizable AC mains plug silhouette at its detached source end. |
 | DC power | `#7C5CE7` | A smooth, straighter cable with a detached barrel, USB-C, or other device-appropriate low-voltage connector. |
 
-All connection strokes use a thin graphite `#252A30` keyline so they remain
-legible on both light and dark canvases. Use the semantic color consistently
-across an article. Do not recolor a cable merely to separate nearby paths.
+All connection strokes use a clear graphite `#252A30` or near-black external
+keyline so they remain distinct from the white background. The colored stroke
+stays inside this contour. Use the semantic color consistently across an article.
+Do not recolor a cable merely to separate nearby paths.
 
 Ethernet and PoE use the same geometry because both run over twisted-pair cable.
 PoE is distinguished redundantly by green and a lightning marker. Wi-Fi never
@@ -144,12 +154,16 @@ contours with slightly imperfect pressure, very light watercolor and marker
 washes, professional engineering notebook aesthetic, not childish.
 Color palette: graphite #252A30, cool off-white and gray, muted cornflower blue
 #3273DC, with sparse pale sage status accents.
+Outlines: every object and every linear element, including arrows, cables,
+connectors, node shapes, and icons, has a crisp continuous external outline in
+graphite #252A30 or near-black. Keep colored strokes and fills inside the dark
+outline, and make outer contours slightly stronger than internal details.
 Materials/textures: delicate pencil shading and dry watercolor texture; crisp
-readable silhouette; only a faint contact shadow confined to the object.
+readable silhouette; no contact, cast, or drop shadows outside the object.
 Composition/framing: centered isolated object, generous white padding, no crop.
 Background: solid pure white background (#FFFFFF) across the entire canvas; fully
 opaque, with no transparency, checkerboard, paper texture, vignette, glow,
-gradient, scenery, or colored backdrop.
+gradient, scenery, colored backdrop, or shadow around the object.
 Constraints: no text, labels, letters, numbers, logos, watermark, decorative
 objects, scenery, or photorealism.
 ```
