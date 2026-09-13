@@ -2,8 +2,8 @@
 title = "Using IP KVMs for a Small Mac Cloud (draft)"
 date = 2026-08-25T12:00:00+02:00
 draft = true
-tags = ["macos", "ip-kvm", "testing", "homelab"]
-categories = ["macos", "homelab"]
+tags = ["macOS", "ip-kvm", "testing", "homelab"]
+categories = ["macOS", "homelab"]
 description = "A practical macOS test lab built from physical Macs, IP KVM devices, managed power, and an isolated network."
 summary = "Why virtual machines and normal remote access are not enough for some low-level macOS tests, and what I learned from NanoKVM, JetKVM, GL.iNet Comet, and Comet PoE."
 resources = [

@@ -11,7 +11,7 @@
       </ul>
     {{- end -}}
     {{- if $destination.isExternal -}}
-      <span class="article-card__external-destination"><span aria-hidden="true">{{ $destination.hostname }} ↗</span><span class="visually-hidden">External link to {{ $destination.hostname }}</span></span>
+      <a class="article-card__external-destination" href="{{ $destination.url }}" target="{{ $destination.target }}" rel="{{ $destination.rel }}">{{ $destination.hostname }} {{ partial "icons/external.html" . }}<span class="visually-hidden"> (external link)</span></a>
     {{- end -}}
   </div>
 {{- else -}}

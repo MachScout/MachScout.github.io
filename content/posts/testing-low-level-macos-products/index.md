@@ -2,8 +2,8 @@
 title = "Testing Low-Level macOS Products"
 date = 2026-08-24T12:00:00+02:00
 draft = false
-tags = ["macos", "testing"]
-categories = ["macos"]
+tags = ["macOS", "testing"]
+categories = ["macOS"]
 description = "Why virtual machines and normal remote access are not enough for some low-level macOS tests."
 summary = "Why virtual machines and normal remote access are not enough for some low-level macOS tests."
 resources = [
