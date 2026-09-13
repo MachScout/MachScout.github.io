@@ -19,6 +19,8 @@ assert_contains "$page" '<main id="main-content" class="main-content--article"'
 assert_contains "$page" '<article class="article article--with-toc">'
 assert_contains "$page" 'class="article-hero"'
 assert_contains "$page" 'alt="Local fixture featured image"'
+assert_contains "$page" '<a class="media-lightbox__trigger" href="/posts/local-article/featured-image.svg"'
+assert_contains "$page" 'data-lightbox-src="/posts/local-article/featured-image.svg"'
 assert_not_contains "$page" '<p class="article__description">'
 assert_contains "$page" 'fetchpriority="high"'
 assert_contains "$page" '<div class="article__layout">'
@@ -63,6 +65,8 @@ assert_not_contains "$empty_toc_page" 'class="table-of-contents"'
 assert_file "$stylesheet"
 assert_file "$javascript"
 assert_contains "$javascript" 'aria-current'
+assert_contains "$javascript" 'data-lightbox-trigger'
+assert_contains "$javascript" 'data-carousel-slide'
 if ! grep -F '.article-featured--hero{border-radius:.4rem}' "$stylesheet" >/dev/null; then
   printf 'article hero images must preserve their intrinsic aspect ratio\n' >&2
   exit 1

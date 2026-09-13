@@ -1,3 +1,3 @@
-{{- $scripts := slice (resources.Get "js/theme.js") (resources.Get "js/navigation.js") (resources.Get "js/toc.js") -}}
+{{- $scripts := slice (resources.Get "js/theme.js") (resources.Get "js/navigation.js") (resources.Get "js/toc.js") (resources.Get "js/media.js") -}}
 {{- $js := $scripts | resources.Concat "js/site.js" | minify | fingerprint -}}
 <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>

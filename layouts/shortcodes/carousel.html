@@ -1,0 +1,20 @@
+{{- $label := strings.TrimSpace (.Get "label") | default "Image carousel" -}}
+{{- $caption := strings.TrimSpace (.Get "caption") -}}
+{{- $slides := .Inner -}}
+{{- $total := len (findRE "data-carousel-slide" $slides) -}}
+{{- if eq $total 0 -}}
+  {{- errorf "carousel shortcode: at least one carousel-image is required in %s" .Page.File.Path -}}
+{{- end -}}
+<figure class="media-carousel" data-carousel aria-label="{{ $label }}" aria-roledescription="carousel">
+  <div class="media-carousel__viewport">
+    {{- $slides | safeHTML -}}
+  </div>
+  {{- if gt $total 1 }}
+  <div class="media-carousel__controls" hidden>
+    <button type="button" class="media-carousel__control" data-carousel-previous aria-label="Previous image">{{ partial "icon.html" (dict "name" "chevron-left") }}</button>
+    <span class="media-carousel__position" aria-live="polite"><span data-carousel-current>1</span> / <span data-carousel-total>{{ $total }}</span></span>
+    <button type="button" class="media-carousel__control" data-carousel-next aria-label="Next image">{{ partial "icon.html" (dict "name" "chevron-right") }}</button>
+  </div>
+  {{- end }}
+  {{- with $caption }}<figcaption class="media-carousel__caption">{{ . }}</figcaption>{{ end }}
+</figure>

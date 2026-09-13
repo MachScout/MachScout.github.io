@@ -14,17 +14,27 @@ test -f "$output_dir/index.html"
 test -f "$output_dir/posts/index.html"
 test -f "$output_dir/about/index.html"
 test -f "$output_dir/index.xml"
+grep -F '<h1>Posts</h1>' "$output_dir/posts/index.html" >/dev/null
+grep -F '<h1>Tags</h1>' "$output_dir/tags/index.html" >/dev/null
+grep -F '<h1>Categories</h1>' "$output_dir/categories/index.html" >/dev/null
 
 testing_article="$output_dir/posts/testing-low-level-macos-products/index.html"
-ip_kvm_article="$output_dir/posts/using-ip-kvms-for-a-small-mac-cloud/index.html"
+old_ip_kvm_article="$output_dir/posts/using-ip-kvms-for-a-small-mac-cloud/index.html"
+ip_kvm_article="$output_dir/posts/building-your-own-mac-cloud-with-ip-kvms/index.html"
 mac_cloud_article="$output_dir/posts/building-a-mac-cloud-with-ip-kvms/index.html"
 unifi_article="$output_dir/posts/migrating-from-openwrt-to-unifi/index.html"
 swift_concurrency_article="$output_dir/posts/swift-concurrency-vs-gcd-for-security-events/index.html"
 about_page="$output_dir/about/index.html"
 test -f "$testing_article"
 test -f "$swift_concurrency_article"
-test ! -e "$ip_kvm_article"
+test -f "$ip_kvm_article"
+test ! -e "$old_ip_kvm_article"
 test ! -e "$mac_cloud_article"
+ip_kvm_link_count=$(grep -oF '<a href=/posts/building-your-own-mac-cloud-with-ip-kvms/>next article</a>' "$testing_article" | wc -l | tr -d ' ')
+if [ "$ip_kvm_link_count" -ne 3 ]; then
+  printf 'expected 3 links to the published IP KVM article, found %s\n' "$ip_kvm_link_count" >&2
+  exit 1
+fi
 if grep -F '/posts/using-ip-kvms-for-a-small-mac-cloud/' "$testing_article" >/dev/null; then
   printf 'published article links to draft IP KVM article\n' >&2
   exit 1

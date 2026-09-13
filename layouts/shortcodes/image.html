@@ -16,9 +16,12 @@
 {{- $isPhoto := in (slice "jpeg" "jpg" "webp" "avif") $resource.MediaType.SubType -}}
 {{- $isProcessable := and (eq $resource.ResourceType "image") (in (slice "avif" "gif" "jpeg" "jpg" "png" "webp") $resource.MediaType.SubType) -}}
 {{- $class := strings.TrimSpace (.Get "class") -}}
+{{- $caption := strings.TrimSpace (.Get "caption") -}}
 <figure class="media-figure{{ with $class }} {{ . }}{{ end }}">
-  <img class="media-frame{{ if $isPNG }} media-frame--png{{ end }}{{ if $isPhoto }} media-frame--photo{{ end }}" src="{{ $resource.RelPermalink }}"{{ if $isProcessable }} width="{{ $resource.Width }}" height="{{ $resource.Height }}"{{ end }} alt="{{ if $decorative }}{{ else }}{{ $alt }}{{ end }}">
-  {{- with .Get "caption" }}
+  <a class="media-lightbox__trigger" href="{{ $resource.RelPermalink }}" data-lightbox-trigger data-lightbox-src="{{ $resource.RelPermalink }}" data-lightbox-alt="{{ if $decorative }}{{ else }}{{ $alt }}{{ end }}"{{ with $caption }} data-lightbox-caption="{{ . }}"{{ end }} aria-label="{{ if $decorative }}Open image fullscreen{{ else }}Open {{ $alt }} fullscreen{{ end }}">
+    <img class="media-frame{{ if $isPNG }} media-frame--png{{ end }}{{ if $isPhoto }} media-frame--photo{{ end }}" src="{{ $resource.RelPermalink }}"{{ if $isProcessable }} width="{{ $resource.Width }}" height="{{ $resource.Height }}"{{ end }} alt="{{ if $decorative }}{{ else }}{{ $alt }}{{ end }}">
+  </a>
+  {{- with $caption }}
     <figcaption>{{ . }}</figcaption>
   {{- end }}
 </figure>

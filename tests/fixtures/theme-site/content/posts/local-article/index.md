@@ -11,6 +11,11 @@ Local fixture article content.
 
 {{< image src="media.svg" alt="Fixture diagram" caption="Diagram caption." class="theme-aware-diagram" >}}
 
+{{< carousel label="Fixture gallery" caption="Gallery caption." >}}
+  {{< carousel-image src="media.svg" alt="First fixture image" caption="First slide." >}}
+  {{< carousel-image src="featured-image.svg" alt="Second fixture image" caption="Second slide." >}}
+{{< /carousel >}}
+
 {{< video src="test-video.mp4" poster="poster.svg" ratio="4/3" maxWidth="36rem" caption="Custom clip." >}}
 
 {{< youtube id="dQw4w9WgXcQ" title="Fixture YouTube video" >}}

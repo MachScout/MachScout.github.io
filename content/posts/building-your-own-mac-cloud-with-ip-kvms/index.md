@@ -1,19 +1,28 @@
 +++
-title = "Using IP KVMs for a Small Mac Cloud (draft)"
-date = 2026-08-25T12:00:00+02:00
-draft = true
+title = "Building your own Mac Cloud with IP KVMs"
+date = 2026-09-13T12:00:00+02:00
+draft = false
 tags = ["macOS", "ip-kvm", "testing", "homelab"]
 categories = ["macOS", "homelab"]
 description = "A practical macOS test lab built from physical Macs, IP KVM devices, managed power, and an isolated network."
 summary = "Why virtual machines and normal remote access are not enough for some low-level macOS tests, and what I learned from NanoKVM, JetKVM, GL.iNet Comet, and Comet PoE."
+featuredImageAlt = "A small Mac test lab built around IP KVM devices"
 resources = [
   { name = "featured-image", src = "featured-image.jpg" }
 ]
 +++
 
-## Using IP KVMs
+## Introduction
 
-That's a lot of text, and we've only just reached the actual subject of this article.
+In the [previous article](/posts/testing-low-level-macos-products/), I described the pros and cons of different approaches to testing macOS. Personally, I use real Macs most of the time, and virtual machines occasionally.
+
+{{< image src="workspace-macs.jpg" alt="Three closed MacBooks arranged side by side on my desk" caption="My workspace, with three Macs waiting for their next job." >}}
+
+I wanted a good solution for both testing and sharing devices, as well as for remote development. Travelling with several machines is inconvenient enough that I always had to choose: take my personal MacBook, or one of the work ones?
+
+Read on to see what came of it.
+
+## Using IP KVMs
 
 I had considered IP KVM devices before, but older options were either too expensive or did not look trustworthy. I was also unsure about video latency.
 
@@ -105,7 +114,7 @@ I tested:
 - GL.iNet Comet (GL-RM1);
 - GL.iNet Comet PoE (GL-RM1PE).
 
-I recently ordered a Comet Q for a separate mobile-device use case, but I'm still waiting for it.
+I later added a Comet Q for a separate mobile-device use case; more on that below.
 
 I did not buy a PiKVM. In my configuration it was more expensive and did not give me a clear advantage for this lab. Its main extra value was that the Raspberry Pi could later be reused for another project.
 
@@ -121,8 +130,7 @@ The hardware is still interesting for its size and price. Current [NanoKVM docum
 
 {{< image src="nanokvm-front.jpg" alt="NanoKVM connected to a Mac mini, showing its display and front controls" caption="NanoKVM connected to the test Mac." >}}
 
-It can also be connected with only two cables: USB and HDMI. The USB connection can be used for both control and power. This has both advantages and disadvantages.
-
+The USB connection can be used for both control and power. This has both advantages and disadvantages.
 For me, it is more of a disadvantage because I want to control the KVM's power separately.
 
 {{< image src="nanokvm-back.jpg" alt="Back of the NanoKVM enclosure and connected cables on a Mac mini" caption="The rear side of NanoKVM." >}}
@@ -134,8 +142,10 @@ For me, it is more of a disadvantage because I want to control the KVM's power s
 JetKVM is a well-designed device. The case, display, and UI are clean, and local access is straightforward.
 
 At the time of my first tests, it did not have the general file-sharing workflow I wanted. Current JetKVM firmware can [mount read-only virtual disks and installation images](https://jetkvm.com/docs/peripheral-devices/mount-drive) from internal storage, a URL, or the browser. That is useful for installation and recovery, but it is different from a read-write shared folder for moving arbitrary files in both directions.
+Here too, power cannot be separated from the USB connection.
 
 JetKVM's cloud uses Google Account authentication. There is also a [self-hosted option](https://jetkvm.com/docs/getting-started/faq), but I didn't test how it works.
+Audio is not available when using the cloud connection.
 
 And honestly, huge respect to the people behind this project. It looks really cool, and I think its success pushed other vendors to start developing their own small IP KVMs.
 
@@ -188,12 +198,42 @@ The important part for organizations is there, though: the [self-hosted GLKVM pr
 {{< video src="comet-rm1pe-full-hd-120hz-relay.mp4" caption="Comet PoE: Full HD with a 120 Hz input through the hosted relay." >}}
 
 
-### What is still missing
+### What is still missing—and what other drawbacks remain
+
+#### USB passthrough
 
 The main missing feature is general USB device passthrough. The tested KVMs emulate selected USB functions such as keyboard, mouse, storage, and sometimes audio. They do not forward an arbitrary local USB device to the remote Mac.
 
 For example, I cannot attach a YubiKey to my laptop and make the remote Mac see that same physical key. GL.iNet has a public [feature request for YubiKey USB passthrough](https://forum.gl-inet.com/t/usb-passthrough-for-yubikey/62938), but this is a much harder problem than forwarding HID input.
 
+#### Clipboard & file sharing
+
+Clipboard transfer is one-way and text-only. It is not really clipboard synchronization: you paste text into a special field, and the KVM types it out one character at a time on the remote side. Naturally, keyboard layouts and special characters can cause problems.
+
+To copy something in the other direction, you have to use file sharing. That is not a stream either. You mount a virtual “disk,” put the files on it, unmount it, and then download them—or do the same dance in reverse.
+
+#### Remote debugging 
+
+This is missing too. If you want to automate installing and launching an application, there is no straightforward way to do it. You need to invent an additional channel because you simply do not have direct access to the device's ports.
+
+Virtual machines and ordinary remote devices are easier: you can connect over SSH and automate uploading an application, running commands, or even attaching a remote debugger.
+
+#### Security perspective
+
+At this point, I do not consider these devices vetted and trusted enough to deploy as-is. If you want to use them for production work, strict network isolation and tightly limited access are essential.
+
+## My current setup
+
+{{< carousel label="Photos of my current Mac lab" caption="My current setup from a few different, increasingly cable-heavy angles." >}}
+  {{< carousel-image src="current-setup-detail.jpg" alt="Close view of two Macs and several KVM connections on the top shelf" caption="A closer look at the KVM connections." >}}
+  {{< carousel-image src="current-setup-front.jpg" alt="Front view of the rack with two Macs, KVM devices, a switch, and Wi-Fi access points" caption="Macs and KVM hardware at the top; networking and power below." >}}
+  {{< carousel-image src="current-setup-side.jpg" alt="Side view of the Mac lab showing stacked computers and connected KVM hardware" caption="The less photogenic side, where the cables explain everything." >}}
+  {{< carousel-image src="current-setup-rack.jpg" alt="Front view of the compact equipment rack holding Macs, networking gear, and filament spools" caption="The rack that keeps most of the hardware in one place." >}}
+    {{< carousel-image src="current-setup-in-use.jpg" alt="Three open MacBooks connected beside the Mac lab rack" caption="All three Macs connected for side-by-side testing." >}}
+{{< /carousel >}}
+
+Funny enough, during the actual testing I had three KVMs connected for quite a while, so I could test and compare them in parallel.
+But my girlfriend commandeered one of the MacBooks, so the lab has since shrunk.
 
 ## The final setup I would build
 
@@ -208,6 +248,8 @@ For a permanent lab, I would use this layout:
 7. Allow access to that service only through a VPN.
 8. Put the test Macs in separate VLANs when tests require different routing or firewall policies.
 
+Each Mac also needs a remote power-button actuator, so it can be switched on or put into Recovery mode without anyone standing next to it.
+
 That keeps power, KVM management, and the network seen by each test Mac separate. To me, this is a really interesting setup.
 
 {{< image src="final-lab-architecture.png" alt="Final Mac lab architecture with multiple Mac minis, native PoE KVMs, managed power, a self-hosted KVM service, and VPN access" caption="The final setup I would build. Green lines carry power; black lines carry data." class="theme-aware-diagram" >}}
@@ -215,14 +257,26 @@ That keeps power, KVM management, and the network seen by each test Mac separate
 
 ## Comet Q
 
-I also ordered a Comet Q. It is designed for USB-C devices with DisplayPort Alt Mode, including phones, tablets, and laptops. It may be useful for mobile developers and security researchers, depending on how completely it can control the target screen and input path.
+{{< carousel label="Photos of the GL.iNet Comet Q" caption="The Comet Q, with and without its very orange protective case." >}}
+  {{< carousel-image src="comet-q-front.jpg" alt="Front view of the black circular GL.iNet Comet Q" caption="The glossy front of the Comet Q." >}}
+  {{< carousel-image src="comet-q-case.jpg" alt="GL.iNet Comet Q next to its orange protective case" caption="Comet Q and its removable protective case." >}}
+    {{< carousel-image src="comet-q-connected.jpg" alt="GL.iNet Comet Q in an orange case with USB-C cables connected and its status screen on" caption="Comet Q powered up and connected." >}}
 
-I will treat that as a separate test. Mobile-device control has different constraints from a Mac lab, so it does not change the architecture described here.
+{{< /carousel >}}
 
-Funny enough, during the actual testing I had all three devices connected for quite a while, so I could test and compare them in parallel.
+I also got a [Comet Q](https://docs.gl-inet.com/kvm/en/user_guide/gl-rmq1/). It is designed for USB-C devices with DisplayPort Alt Mode, including phones, tablets, and laptops. It may be useful for mobile developers and security researchers, depending on how completely it can control the target screen and input path.
+
+The device is genuinely cool and has a lot of promise for building something like an iPhone cloud. Still, I will treat that as a separate test. Mobile-device control has different constraints from a Mac lab, so it does not change the architecture described here.
+
 
 ## Conclusion
 
 An IP KVM does not replace virtual machines. It fills the gap between a disposable VM and normal remote desktop access to a physical Mac.
 
 For low-level macOS work, the useful part is not only the remote screen. It is the combination of pre-boot access, independent power control, physical networking, and real hardware. With a managed PoE switch and an isolated management network, a small group of used Mac minis can become a practical remote test lab without turning into a large infrastructure project.
+
+## Did This Meet My Initial Requirements?
+
+I think this was a genuinely interesting bit of research, but unfortunately the result still does not meet my requirements for remote work—mainly because of security. I like how it works, and although I analyzed the traffic from the GL.iNet devices and found nothing particularly suspicious, my inner security engineer will not let me use them in work projects.
+
+I still use the setup for personal projects and some tests, and sometimes even share it with friends for their testing. I just did not integrate the idea into my day-to-day workflow.

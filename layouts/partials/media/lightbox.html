@@ -1,0 +1,12 @@
+<dialog class="media-lightbox" data-lightbox aria-label="Fullscreen image">
+  <button type="button" class="media-lightbox__close" data-lightbox-close aria-label="Close fullscreen image">{{ partial "icon.html" (dict "name" "close") }}</button>
+  <figure class="media-lightbox__figure">
+    <img class="media-lightbox__image" data-lightbox-image alt="">
+    <figcaption class="media-lightbox__caption" data-lightbox-caption hidden></figcaption>
+  </figure>
+  <div class="media-lightbox__controls" data-lightbox-controls hidden>
+    <button type="button" class="media-lightbox__control" data-lightbox-previous aria-label="Previous image">{{ partial "icon.html" (dict "name" "chevron-left") }}</button>
+    <span class="media-lightbox__position" aria-live="polite"><span data-lightbox-current>1</span> / <span data-lightbox-total>1</span></span>
+    <button type="button" class="media-lightbox__control" data-lightbox-next aria-label="Next image">{{ partial "icon.html" (dict "name" "chevron-right") }}</button>
+  </div>
+</dialog>

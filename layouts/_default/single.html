@@ -21,7 +21,9 @@
       </header>
       {{- if and $resource (not (.Params.hideFeaturedImage | default false)) -}}
         <figure class="article-hero">
+          <a class="media-lightbox__trigger" href="{{ $resource.RelPermalink }}" data-lightbox-trigger data-lightbox-src="{{ $resource.RelPermalink }}" data-lightbox-alt="{{ .Params.featuredImageAlt | default .Title }}" aria-label="Open {{ .Params.featuredImageAlt | default .Title }} fullscreen">
           {{ partial "article/featured.html" (dict "page" . "resource" $resource "variant" "hero" "eager" true) }}
+          </a>
         </figure>
       {{- end -}}
       {{- if $hasToc }}
