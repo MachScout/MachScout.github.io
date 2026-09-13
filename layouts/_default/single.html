@@ -12,9 +12,11 @@
     {{- $resource := partial "article/featured-resource.html" . -}}
     {{- $hasToc := partial "article/has-toc.html" . -}}
     <article class="article{{ if $hasToc }} article--with-toc{{ end }}">
+      {{- if $hasToc }}
+      <div class="article__layout">
+      {{- end }}
       <header class="article__header">
         <h1>{{ .Title }}</h1>
-        {{ with .Params.description }}<p class="article__description">{{ . }}</p>{{ end }}
         {{ partial "article/meta.html" (dict "page" . "destination" $destination "showReadingTime" true) }}
       </header>
       {{- if and $resource (not (.Params.hideFeaturedImage | default false)) -}}
@@ -23,7 +25,6 @@
         </figure>
       {{- end -}}
       {{- if $hasToc }}
-      <div class="article__layout">
         {{ partial "article/toc.html" . }}
         <div class="article__body">
       {{- end }}

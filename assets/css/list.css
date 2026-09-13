@@ -7,7 +7,7 @@
 .home-intro__socials a { display: flex; color: var(--color-muted); text-decoration: none; }
 .home-intro__socials a:hover { color: var(--color-accent); }
 .home-intro__socials .icon { width: 1.65rem; height: 1.65rem; fill: currentColor; stroke: none; }
-.home-posts { max-width: var(--shell-width); }
+.home-posts { max-width: var(--content-width); margin: 0 auto; }
 .article-list__header { margin-bottom: 2rem; }
 .article-list__header > :first-child { margin-top: 0; }
 .article-list__header > p { color: var(--color-muted); font-size: 1.125rem; }
@@ -18,7 +18,7 @@
 .article-card__primary-link:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 0.3rem; }
 .article-card__image-link { position: relative; z-index: 2; display: block; overflow: hidden; margin-bottom: 1rem; border-radius: 0.2rem; }
 .article-featured { width: 100%; height: auto; background: var(--color-surface); object-fit: cover; }
-.article-featured--card { aspect-ratio: 3 / 1; }
+.article-featured--card { aspect-ratio: 3 / 1; object-fit: contain; }
 .article-card__title { margin: 0; font-size: clamp(1.25rem, 2vw, 1.55rem); }
 .article-card__title a { position: relative; z-index: 2; color: var(--color-text); }
 .article-card__summary { margin: 0.8rem 0 0; color: var(--color-muted); }

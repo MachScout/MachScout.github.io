@@ -5,7 +5,7 @@
 .article__description { margin: 0 0 1rem; color: var(--color-muted); font-size: 1.125rem; }
 .article .article-card__meta { margin-top: 1rem; }
 .article-hero { width: 100%; margin: 0 0 2.5rem; }
-.article-featured--hero { aspect-ratio: 16 / 9; border-radius: 0.4rem; object-fit: cover; }
+.article-featured--hero { border-radius: 0.4rem; }
 .table-of-contents { margin: 0 0 2.5rem; border: 1px solid var(--color-border); border-radius: 0.4rem; background: var(--color-surface); font-size: 0.8125rem; }
 .table-of-contents__summary { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.25rem; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; list-style: none; text-transform: uppercase; cursor: pointer; }
 .table-of-contents__summary::-webkit-details-marker { display: none; }
@@ -48,10 +48,12 @@
 @media (min-width: 86rem) {
   #main-content.main-content--article { width: min(calc(100% - 2rem), 84rem); }
   .article--with-toc { max-width: none; }
-  .article--with-toc > .article__header, .article--with-toc > .article-hero { width: min(100%, var(--content-width)); margin-left: auto; margin-right: auto; }
   .article__layout { display: grid; grid-template-columns: 16rem minmax(0, var(--content-width)) 16rem; gap: 2rem; align-items: start; }
-  .article__body { grid-column: 2; grid-row: 1; width: 100%; min-width: 0; }
-  .article__layout > .table-of-contents { position: sticky; grid-column: 3; grid-row: 1; top: 5.5rem; max-height: calc(100vh - 7rem); margin: 0; overflow-y: auto; border: 0; border-left: 1px solid var(--color-border); border-radius: 0; background: transparent; scrollbar-width: thin; }
+  .article__layout > .article__header, .article__layout > .article-hero, .article__body { grid-column: 2; width: 100%; min-width: 0; }
+  .article__layout > .article__header { grid-row: 1; }
+  .article__layout > .article-hero { grid-row: 2; }
+  .article__body { grid-row: 3; }
+  .article__layout > .table-of-contents { position: sticky; align-self: start; grid-column: 3; grid-row: 1 / span 3; top: 5.5rem; max-height: calc(100vh - 7rem); margin: 0; overflow-y: auto; border: 0; border-left: 1px solid var(--color-border); border-radius: 0; background: transparent; scrollbar-width: thin; }
   .article__layout > .table-of-contents .table-of-contents__summary { padding: 0.75rem 0 0.75rem 1.25rem; }
   .article__layout > .table-of-contents .table-of-contents__content { padding: 0 0 1rem 1.25rem; }
   .table-of-contents nav > ul ul { display: none; }

@@ -15,7 +15,7 @@ Most macOS application testing is done with virtual machines, physical Macs, or 
 
 In this article, I compare these common approaches and describe the main nuances of using them for development and manual testing. Automated integration testing is outside the scope of this article.
 
-I describe how I built a personal Mac cloud for testing in the [next article](/posts/using-ip-kvms-for-a-small-mac-cloud/).
+I describe how I built a personal Mac cloud for testing in a forthcoming article.
 
 ## What I need to test
 
@@ -152,7 +152,7 @@ This kind of setup is not very common because it creates significant management 
 
 In the deployments I have seen, each device was also connected to a KVM. These were traditional multiport KVMs that allowed only one connected machine to be controlled at a time. This was enough to complete a post-update setup flow and then switch back to VNC, but access to Recovery Mode could still be awkward.
 
-In the [next article](/posts/using-ip-kvms-for-a-small-mac-cloud/), I explain how I addressed these limitations in my own setup.
+In a forthcoming article, I explain how I addressed these limitations in my own setup.
 
 #### VNC
 
@@ -231,4 +231,4 @@ No single approach covers every low-level macOS testing scenario. VMs are the be
 
 A shared remote lab makes physical Macs much more useful, but ordinary remote-access software introduces its own failure modes. The most practical setup is therefore a combination: VMs for fast and repeatable work, plus a smaller pool of physical Macs with an independent way to control their network, power, and pre-boot state.
 
-The [next article](/posts/using-ip-kvms-for-a-small-mac-cloud/) describes the remote Mac lab I built around that idea.
+A forthcoming article describes the remote Mac lab I built around that idea.

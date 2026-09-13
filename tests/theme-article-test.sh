@@ -19,10 +19,17 @@ assert_contains "$page" '<main id="main-content" class="main-content--article"'
 assert_contains "$page" '<article class="article article--with-toc">'
 assert_contains "$page" 'class="article-hero"'
 assert_contains "$page" 'alt="Local fixture featured image"'
+assert_not_contains "$page" '<p class="article__description">'
 assert_contains "$page" 'fetchpriority="high"'
 assert_contains "$page" '<div class="article__layout">'
 assert_contains "$page" '<div class="article__body">'
 assert_contains "$page" '<details class="table-of-contents" aria-labelledby="table-of-contents-title" data-toc open>'
+layout_line=$(grep -n '<div class="article__layout">' "$page" | head -n 1 | cut -d: -f1)
+header_line=$(grep -n '<header class="article__header">' "$page" | head -n 1 | cut -d: -f1)
+if test "$layout_line" -ge "$header_line"; then
+  printf 'desktop article layout must include the header so the table of contents can align with it\n' >&2
+  exit 1
+fi
 assert_contains "$page" '<summary class="table-of-contents__summary">'
 assert_contains "$page" '<span id="table-of-contents-title">Contents</span>'
 assert_contains "$page" '<div class="table-of-contents__content">'
@@ -56,6 +63,10 @@ assert_not_contains "$empty_toc_page" 'class="table-of-contents"'
 assert_file "$stylesheet"
 assert_file "$javascript"
 assert_contains "$javascript" 'aria-current'
+if ! grep -F '.article-featured--hero{border-radius:.4rem}' "$stylesheet" >/dev/null; then
+  printf 'article hero images must preserve their intrinsic aspect ratio\n' >&2
+  exit 1
+fi
 grep -E '\.article__content h4\{[^}]*font-size:1\.3rem;[^}]*font-weight:700' "$stylesheet" >/dev/null
 grep -E '\.article__content h5\{[^}]*color:var\(--color-muted\);[^}]*font-size:1\.05rem;[^}]*font-weight:600' "$stylesheet" >/dev/null
 grep -E '@media[[:space:]]*\(min-width:86rem\)\{[^}]*#main-content\.main-content--article\{[^}]*width:min\(calc\(100% - 2rem\),84rem\)' "$stylesheet" >/dev/null

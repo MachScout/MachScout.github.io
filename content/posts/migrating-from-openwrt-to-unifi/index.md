@@ -7,7 +7,7 @@ categories = ["homelab"]
 description = "Notes from moving my home network from OpenWrt on a GL.iNet Beryl AX to a UniFi Cloud Gateway Max."
 summary = "Why I moved my home network from OpenWrt to UniFi, what worked well, and which trade-offs surprised me."
 resources = [
-  { name = "featured-image", src = "featured-image.jpg" }
+  { name = "featured-image", src = "featured-image.png" }
 ]
 +++
 

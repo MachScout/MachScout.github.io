@@ -23,6 +23,10 @@ about_page="$output_dir/about/index.html"
 test -f "$testing_article"
 test ! -e "$ip_kvm_article"
 test ! -e "$mac_cloud_article"
+if grep -F '/posts/using-ip-kvms-for-a-small-mac-cloud/' "$testing_article" >/dev/null; then
+  printf 'published article links to draft IP KVM article\n' >&2
+  exit 1
+fi
 grep -F 'id=table-of-contents-title>Contents' "$testing_article" >/dev/null
 grep -F 'id=table-of-contents-title>Contents' "$unifi_article" >/dev/null
 grep -F '<h4 id=host-and-guest-version-dependencies>' "$testing_article" >/dev/null
