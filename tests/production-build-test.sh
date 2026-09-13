@@ -15,16 +15,21 @@ test -f "$output_dir/posts/index.html"
 test -f "$output_dir/about/index.html"
 test -f "$output_dir/index.xml"
 
+testing_article="$output_dir/posts/testing-low-level-macos-products/index.html"
+ip_kvm_article="$output_dir/posts/using-ip-kvms-for-a-small-mac-cloud/index.html"
 mac_cloud_article="$output_dir/posts/building-a-mac-cloud-with-ip-kvms/index.html"
 unifi_article="$output_dir/posts/migrating-from-openwrt-to-unifi/index.html"
 about_page="$output_dir/about/index.html"
-grep -F 'id=table-of-contents-title>Contents' "$mac_cloud_article" >/dev/null
+test -f "$testing_article"
+test ! -e "$ip_kvm_article"
+test ! -e "$mac_cloud_article"
+grep -F 'id=table-of-contents-title>Contents' "$testing_article" >/dev/null
 grep -F 'id=table-of-contents-title>Contents' "$unifi_article" >/dev/null
-grep -F '<h5 id=host-and-guest-version-dependencies>' "$mac_cloud_article" >/dev/null
-grep -F '<h5 id=provisioning-uuid>' "$mac_cloud_article" >/dev/null
-grep -F '<h5 id=ssd-and-disk-behavior>' "$mac_cloud_article" >/dev/null
-grep -F '<h5 id=the-two-vm-license-limit>' "$mac_cloud_article" >/dev/null
-grep -F '<h5 id=cases-where-vms-are-better>' "$mac_cloud_article" >/dev/null
+grep -F '<h4 id=host-and-guest-version-dependencies>' "$testing_article" >/dev/null
+grep -F '<h4 id=provisioning-uuid>' "$testing_article" >/dev/null
+grep -F '<h4 id=ssd-and-disk-behavior>' "$testing_article" >/dev/null
+grep -F '<h4 id=the-two-vm-license-limit>' "$testing_article" >/dev/null
+grep -F '<h4 id=cases-where-vms-are-better>' "$testing_article" >/dev/null
 if grep -F 'id=table-of-contents-title>Contents' "$about_page" >/dev/null; then
   printf 'unexpected table of contents in %s\n' "$about_page" >&2
   exit 1
