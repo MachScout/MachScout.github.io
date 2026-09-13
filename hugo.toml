@@ -9,6 +9,7 @@ locale = "en"
 languageName = "English"
 
 dateFormat = "2006-01-02"
+capitalizeListTitles = false
 
 # Menu config
 [menu]

@@ -52,6 +52,10 @@ grep -F 'href=/tags/swiftconcurrency/>SwiftConcurrency</a>' "$output_dir/index.h
 grep -F 'href=/tags/gcd/>GCD</a>' "$output_dir/index.html" >/dev/null
 grep -F 'href=/tags/endpointsecurity/>EndpointSecurity</a>' "$output_dir/index.html" >/dev/null
 grep -F 'href=/tags/macos/>macOS</a>' "$output_dir/index.html" >/dev/null
+grep -F 'href=/tags/openwrt/>openwrt</a>' "$output_dir/index.html" >/dev/null
+grep -F 'href=/tags/unifi/>unifi</a>' "$output_dir/index.html" >/dev/null
+grep -F 'href=/tags/openwrt/>openwrt</a>' "$output_dir/tags/index.html" >/dev/null
+grep -F 'href=/tags/unifi/>unifi</a>' "$output_dir/tags/index.html" >/dev/null
 if grep -F '>Macos</a>' "$output_dir/index.html" >/dev/null; then
   printf 'macOS taxonomy unexpectedly rendered as Macos\n' >&2
   exit 1
