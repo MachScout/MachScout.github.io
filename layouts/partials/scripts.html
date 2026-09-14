@@ -1,3 +1,8 @@
 {{- $scripts := slice (resources.Get "js/theme.js") (resources.Get "js/navigation.js") (resources.Get "js/toc.js") (resources.Get "js/media.js") -}}
 {{- $js := $scripts | resources.Concat "js/site.js" | minify | fingerprint -}}
 <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+{{- if hugo.IsProduction }}
+<!-- Cloudflare Web Analytics -->
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"c72b032b69c84f628dd95a83bde82558"}'></script>
+<!-- End Cloudflare Web Analytics -->
+{{- end }}
